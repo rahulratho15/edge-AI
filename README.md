@@ -1,74 +1,57 @@
-# Qwen Offline Chat for Android
+# Edge AI
 
-This repository contains two Flutter applications for running Qwen3.5-0.8B locally on Android devices. Both variants use `llamadart` for on-device inference, download the required GGUF assets on first launch, and support both text prompts and image-assisted prompts.
+This repository contains `Lightweight Baby`, a Flutter Android application for fully offline text chat and image understanding on mobile devices using LiquidAI's `LFM2-VL-450M` GGUF model.
 
-## Repository Contents
+## Download APK
 
-| Project | Model Variant | Approximate Download Size | Intended Use |
-| --- | --- | --- | --- |
-| `qwen_chat_full` | Q8_0 | 812 MB model + 100 MB vision projector | Higher quality responses on devices with more available memory |
-| `qwen_chat_quantized` | Q4_K_M | 528 MB model + 100 MB vision projector | Lower memory footprint for devices with around 8 GB RAM |
+The latest test build is available directly from the repository root:
 
-## Key Capabilities
+- [lightweightbaby.apk](./lightweightbaby.apk)
 
-- Offline chat after the initial model download
-- Image input through camera or gallery selection
-- Streaming responses in the chat UI
-- Markdown rendering for assistant replies
-- Separate first-run download flow with progress feedback
+## Main Project
 
-## Project Structure
+- [`lightweightbaby/`](./lightweightbaby) is the current Android app source.
+
+## What The App Does
+
+- Runs text-to-text and image-to-text prompts locally on Android
+- Downloads the GGUF model and projector once, then works offline
+- Supports image input from camera or gallery
+- Streams responses inside a simple chat interface
+- Includes light and dark theme support
+
+## Model Setup
+
+The application is configured for these files from the LiquidAI Hugging Face GGUF repository:
+
+- `LFM2-VL-450M-Q4_0.gguf`
+- `mmproj-LFM2-VL-450M-Q8_0.gguf`
+
+These files are not stored in the repository. The app downloads them on first launch and saves them on the device.
+
+## Device Notes
+
+- Android only
+- `arm64-v8a` build
+- Android 8.0 or newer
+- 4 GB RAM or more is recommended
+
+The runtime has been tuned for safer startup on a wider range of Android phones by using a compact baseline CPU bundle and a manual model-load step after launch.
+
+## Build From Source
+
+```bash
+cd lightweightbaby
+flutter pub get
+flutter build apk --release
+```
+
+The generated APK will be placed in:
 
 ```text
-qwen/
-|-- qwen_chat_full/
-|   |-- android/
-|   |-- lib/
-|   `-- test/
-|-- qwen_chat_quantized/
-|   |-- android/
-|   |-- lib/
-|   `-- test/
-`-- README.md
+lightweightbaby/build/app/outputs/flutter-apk/app-release.apk
 ```
 
-## Technical Notes
+## Repository Notes
 
-- Both applications target Android only.
-- The Android builds are configured for `arm64-v8a`.
-- Minimum Android SDK version is 26.
-- Internet access is required only for the initial model download.
-- Downloaded model files are stored on the device and are not part of this repository.
-
-## Requirements
-
-- Flutter 3.29 or newer
-- Dart SDK 3.8 or newer
-- Android SDK and NDK installed through a standard Flutter Android toolchain
-- An Android device or emulator with sufficient storage for the selected model variant
-
-## Running the Applications
-
-From the repository root:
-
-```bash
-cd qwen_chat_full
-flutter pub get
-flutter run --release
-```
-
-Or run the quantized variant:
-
-```bash
-cd qwen_chat_quantized
-flutter pub get
-flutter run --release
-```
-
-## Release Build Note
-
-Both Android projects currently use the debug signing configuration for release builds. Before distributing APKs outside development or internal testing, configure a proper signing setup for each app.
-
-## Version Control Notes
-
-The root `.gitignore` excludes generated Flutter, Gradle, and Android build output, along with machine-specific files such as `local.properties`, IDE metadata, and signing artifacts. This keeps the repository focused on source code and project configuration.
+This repository may also contain earlier experiments and reference folders from previous on-device LLM builds. `lightweightbaby` is the current project intended for direct testing and sharing.

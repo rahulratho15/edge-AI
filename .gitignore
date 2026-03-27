@@ -35,3 +35,4 @@ Thumbs.db
 **/app.*.map.json
 **/*.apk
 **/*.aab
+!lightweightbaby.apk
