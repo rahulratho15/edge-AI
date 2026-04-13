@@ -1,0 +1,33 @@
+name: lfm25baby
+description: Simple offline Android chat app for LiquidAI LFM2.5-VL-450M.
+publish_to: 'none'
+version: 1.0.1+2
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  llamadart: ^0.6.8
+  path_provider: ^2.1.5
+  image_picker: ^1.2.1
+  http: ^1.6.0
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+hooks:
+  user_defines:
+    llamadart:
+      llamadart_native_backends:
+        platforms:
+          android-arm64:
+            backends: [cpu, vulkan]
+            cpu_profile: full
+
+flutter:
+  uses-material-design: true
